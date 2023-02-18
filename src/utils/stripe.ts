@@ -68,7 +68,7 @@ export const StripeUtil = {
 
     try {
       event = MyStripe.webhooks.constructEvent(
-        (req as any).rawBody,
+        (req as any).body,
         signature as any,
         webhookSecret
       );
