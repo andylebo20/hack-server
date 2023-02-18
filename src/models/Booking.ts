@@ -1,13 +1,18 @@
-import { ObjectId } from 'mongodb';
-import { model, Schema } from 'mongoose';
+import { ObjectId } from "mongodb";
+import { model, Schema } from "mongoose";
 
-import { DocumentNameMappings } from './helpers';
+import { DocumentNameMappings } from "./helpers";
 
 const BookingSchema = new Schema(
   {
-    propertyId: { type: ObjectId, ref: DocumentNameMappings.Property, required: true },
+    propertyId: {
+      type: ObjectId,
+      ref: DocumentNameMappings.Property,
+      required: true,
+    },
     nameOfRenter: { type: String, required: true },
-    emailOfRenter: { type: String, required: true }
+    emailOfRenter: { type: String, required: true },
+    pricePaidInDollars: { type: Number, required: true },
   },
   { timestamps: true }
 );

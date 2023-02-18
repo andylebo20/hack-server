@@ -1,8 +1,6 @@
 import { queryBool } from "./express";
 
 export const config = {
-  landingPageBaseUrl: "https://trywibu.com",
-  baseUrl: "https://usewibu.com",
   environment: {
     defaultPort: 5900,
     isDev: process.env.IS_DEV,

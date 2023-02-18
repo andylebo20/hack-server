@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { prop } from "lodash/fp";
 import { Booking } from "src/models/Booking";
 import { Property } from "src/models/Property";
+import { MyStripe, StripeUtil } from "src/utils/stripe";
 
 export const UserController = {
   bookProperty: async (req: Request, res: Response) => {
@@ -34,5 +35,21 @@ export const UserController = {
     const { id } = req.params;
     const property = await Property.findById(id);
     res.send(property);
+  },
+  invoiceWebhook: async (req: Request, res: Response) => {
+    const { data, eventType } = StripeUtil.getEventType(req);
+    await StripeUtil.triggerInvoiceEventType(eventType, data);
+    res.send({});
+  },
+  getCheckoutUrlForPropertyId: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { emailOfRenter, nameOfRenter } = req.query;
+    const property = await Property.findById(id);
+    const checkoutSession = await StripeUtil.startCheckoutSession(
+      property,
+      emailOfRenter,
+      nameOfRenter
+    );
+    res.send(checkoutSession.url);
   },
 };

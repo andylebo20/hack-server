@@ -15,22 +15,6 @@ const SERVER_MSG = `You're staring at the Treehacks project server.`;
 const port = process.env.PORT || config.environment.defaultPort;
 export const app = express();
 
-const limiterSendMessage = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 10, // Limit each IP to 10 requests per `window` (here, per 1 minute)
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-app.use("/api/users/send-message", limiterSendMessage);
-
-const limiterSearch = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 50, // Limit each IP to 50 requests per `window` (here, per 1 minute)
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
-app.use("/api/users/search", limiterSearch);
-
 app.use(cors());
 app.use("/api/users/invoice-webhook", bodyParser.raw({ type: "*/*" }));
 app.use(bodyParser.json());
