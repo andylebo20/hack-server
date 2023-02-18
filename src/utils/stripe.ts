@@ -28,7 +28,7 @@ export const StripeUtil = {
     nameOfRenter,
     daysBooked
   ) => {
-    const priceToPayInDollars = property.price;
+    const priceToPayInDollars = property.price * daysBooked;
     return stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
