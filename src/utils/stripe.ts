@@ -25,7 +25,7 @@ export const StripeUtil = {
   startCheckoutSession: async (property, emailOfRenter, nameOfRenter) => {
     const priceToPayInDollars = property.price;
     return stripe.checkout.sessions.create({
-      mode: "subscription",
+      mode: "payment",
       payment_method_types: ["card"],
       line_items: [
         {
