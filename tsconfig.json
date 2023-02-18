@@ -18,7 +18,8 @@
     "types": ["node", "jest"],
     "paths": {
       "src/*": ["./src/*"]
-    }
+    },
+    "rootDir": "./"
   },
   "include": ["src"],
   "exclude": ["node_modules"]
