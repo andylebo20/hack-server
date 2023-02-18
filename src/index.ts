@@ -17,6 +17,7 @@ export const app = express();
 
 app.use(cors());
 app.use("/api/users/invoice-webhook", bodyParser.raw({ type: "*/*" }));
+app.use("/api/users/checkout-url/:id", bodyParser.raw({ type: "*/*" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.get("/", (_, res) => res.send(SERVER_MSG));
