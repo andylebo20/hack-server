@@ -16,7 +16,7 @@ type InvoiceEventType =
   | "invoice.payment_failed"
   | "customer.subscription.deleted";
 
-const stripe = new Stripe(config.stripe.apiKey, {
+const stripe = new Stripe(config.stripe.secretKey, {
   typescript: true,
   apiVersion: "2022-08-01",
 });
@@ -29,7 +29,15 @@ export const StripeUtil = {
       payment_method_types: ["card"],
       line_items: [
         {
-          amount: priceToPayInDollars * 100,
+          price_data: {
+            currency: "usd",
+            unit_amount: priceToPayInDollars * 100,
+            product_data: {
+              name: "Reservation",
+              description: property.address,
+              images: [property.pictureUrl],
+            },
+          },
           quantity: 1,
         },
       ],
@@ -39,12 +47,12 @@ export const StripeUtil = {
       // {CHECKOUT_SESSION_ID} is a string literal; do not change it!
       // the actual Session ID is returned in the query parameter when your customer
       // is redirected to the success page.
-      success_url: `http://localhost:3000/checkout-success/${property._id}?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `http://localhost:3000/property/${property._id}`,
+      success_url: `http://localhost:3000/checkout-success/${property._id.toString()}?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `http://localhost:3000/property/${property._id.toString()}`,
       metadata: {
         emailOfRenter,
         nameOfRenter,
-        propertyId: property._id,
+        propertyId: property._id.toString(),
         pricePaidInDollars: priceToPayInDollars,
       },
     });
