@@ -56,13 +56,24 @@ export const UserController = {
   },
   getBookingData: async (req: Request, res: Response) => {
     const bookings = await Booking.find().populate("propertyId");
-    const totalEarnedInLifetime = _.sumBy(bookings, "pricePaidInDollars");
-    const averageDaysBooked = _.sumBy(bookings, "daysBooked") / bookings.length;
-    const averagePricePaid = totalEarnedInLifetime / averageDaysBooked;
-    const estimatedEarningsThisYear =
+    const totalEarnedInLifetime = _.round(
+      _.sumBy(bookings, "pricePaidInDollars"),
+      2
+    );
+    const averageDaysBooked = _.round(
+      _.sumBy(bookings, "daysBooked") / bookings.length,
+      2
+    );
+    const averagePricePaid = _.round(
+      totalEarnedInLifetime / averageDaysBooked,
+      2
+    );
+    const estimatedEarningsThisYear = _.round(
       (365.0 / (averageDaysBooked * bookings.length)) *
-      (averagePricePaid / averageDaysBooked);
-    const numBookings = bookings.length;
+        (averagePricePaid / averageDaysBooked),
+      2
+    );
+    const numBookings = _.round(bookings.length, 2);
     res.send({
       totalEarnedInLifetime,
       averageDaysBooked,
