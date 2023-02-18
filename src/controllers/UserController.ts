@@ -3,6 +3,7 @@ import { prop } from "lodash/fp";
 import { Booking } from "src/models/Booking";
 import { Property } from "src/models/Property";
 import { MyStripe, StripeUtil } from "src/utils/stripe";
+import _ from "lodash";
 
 export const UserController = {
   bookProperty: async (req: Request, res: Response) => {
@@ -52,5 +53,20 @@ export const UserController = {
       Number(daysBooked)
     );
     res.send(checkoutSession.url);
+  },
+  getBookingData: async (req: Request, res: Response) => {
+    const bookings = await Booking.find().populate("propertyId");
+    const totalEarnedInLifetime = _.sumBy(bookings, "pricePaidInDollars");
+    const averageDaysBooked = _.sumBy(bookings, "daysBooked") / bookings.length;
+    const averagePricePaid = totalEarnedInLifetime / averageDaysBooked;
+    const estimatedEarningsThisYear =
+      (365.0 / (averageDaysBooked * bookings.length)) *
+      (averagePricePaid / averageDaysBooked);
+    res.send({
+      totalEarnedInLifetime,
+      averageDaysBooked,
+      averagePricePaid,
+      estimatedEarningsThisYear,
+    });
   },
 };
