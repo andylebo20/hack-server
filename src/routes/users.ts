@@ -5,6 +5,7 @@ const router = expressRouter();
 
 router.post("/book", UserController.bookProperty);
 router.get("/properties", UserController.getProperties);
+router.get("/property/:id", UserController.getPropertyById);
 router.post("/property", UserController.createNewProperty);
 
 export default router;

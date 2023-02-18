@@ -28,4 +28,9 @@ export const UserController = {
     });
     res.send(property);
   },
+  getPropertyById: async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const property = await Property.findById(id);
+    res.send(property);
+  },
 };
