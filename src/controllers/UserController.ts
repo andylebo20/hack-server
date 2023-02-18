@@ -62,11 +62,13 @@ export const UserController = {
     const estimatedEarningsThisYear =
       (365.0 / (averageDaysBooked * bookings.length)) *
       (averagePricePaid / averageDaysBooked);
+    const numBookings = bookings.length;
     res.send({
       totalEarnedInLifetime,
       averageDaysBooked,
       averagePricePaid,
       estimatedEarningsThisYear,
+      numBookings,
     });
   },
 };
