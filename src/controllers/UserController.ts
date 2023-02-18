@@ -18,13 +18,15 @@ export const UserController = {
     res.send(properties);
   },
   createNewProperty: async (req: Request, res: Response) => {
-    const { address, price, typeOfSpace, size, pictureUrl } = req.body;
+    const { address, price, typeOfSpace, size, pictureUrl, description } =
+      req.body;
     const property = await Property.create({
       address,
       price,
       typeOfSpace,
       size,
       pictureUrl,
+      description,
     });
     res.send(property);
   },
