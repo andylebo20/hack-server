@@ -1,0 +1,19 @@
+{
+  "rootDir": "../../",
+  "preset": "ts-jest",
+  "testEnvironment": "<rootDir>/src/tests/mongo-environment.ts",
+  "testPathIgnorePatterns": ["node_modules"],
+  "setupFilesAfterEnv": [
+    "<rootDir>/src/tests/setupFile.ts",
+    "<rootDir>/src/tests/jestMocks.ts"
+  ],
+  "moduleDirectories": ["node_modules"],
+  "globals": {
+    "NODE_ENV": "test",
+    "ts-jest": {
+      "tsconfig": "tsconfig.json",
+      "isolatedModules": true,
+      "diagnostics": true
+    }
+  }
+}
