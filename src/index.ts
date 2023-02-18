@@ -10,7 +10,7 @@ import { exceptionHandler } from "./utils/exceptionHandler";
 import { startMongo } from "./utils/mongoConfig";
 import rateLimit from "express-rate-limit";
 
-const SERVER_MSG = `You're staring at the TextMe server.`;
+const SERVER_MSG = `You're staring at the Treehacks project server.`;
 
 const port = process.env.PORT || config.environment.defaultPort;
 export const app = express();
