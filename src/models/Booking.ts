@@ -13,6 +13,7 @@ const BookingSchema = new Schema(
     nameOfRenter: { type: String, required: true },
     emailOfRenter: { type: String, required: true },
     pricePaidInDollars: { type: Number, required: true },
+    daysBooked: { type: Number, required: true },
   },
   { timestamps: true }
 );

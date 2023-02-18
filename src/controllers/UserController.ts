@@ -43,12 +43,13 @@ export const UserController = {
   },
   getCheckoutUrlForPropertyId: async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { emailOfRenter, nameOfRenter } = req.query;
+    const { emailOfRenter, nameOfRenter, daysBooked } = req.query;
     const property = await Property.findById(id);
     const checkoutSession = await StripeUtil.startCheckoutSession(
       property,
       emailOfRenter,
-      nameOfRenter
+      nameOfRenter,
+      Number(daysBooked)
     );
     res.send(checkoutSession.url);
   },

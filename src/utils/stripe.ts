@@ -22,7 +22,12 @@ const stripe = new Stripe(config.stripe.secretKey, {
 });
 
 export const StripeUtil = {
-  startCheckoutSession: async (property, emailOfRenter, nameOfRenter) => {
+  startCheckoutSession: async (
+    property,
+    emailOfRenter,
+    nameOfRenter,
+    daysBooked
+  ) => {
     const priceToPayInDollars = property.price;
     return stripe.checkout.sessions.create({
       mode: "payment",
@@ -54,6 +59,7 @@ export const StripeUtil = {
         nameOfRenter,
         propertyId: property._id.toString(),
         pricePaidInDollars: priceToPayInDollars,
+        daysBooked,
       },
     });
   },
@@ -89,6 +95,7 @@ export const StripeUtil = {
     const emailOfRenter = dataObj["metadata"]["emailOfRenter"];
     const propertyId = dataObj["metadata"]["propertyId"];
     const pricePaidInDollars = dataObj["metadata"]["pricePaidInDollars"];
+    const daysBooked = dataObj["metadata"]["daysBooked"];
 
     switch (eventType) {
       case "checkout.session.completed":
@@ -99,6 +106,7 @@ export const StripeUtil = {
           emailOfRenter,
           propertyId,
           pricePaidInDollars,
+          daysBooked,
         });
         break;
       case "invoice.paid":
