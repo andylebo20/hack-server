@@ -35,6 +35,8 @@ export const UserController = {
   getPropertyById: async (req: Request, res: Response) => {
     const { id } = req.params;
     const property = await Property.findById(id);
+    property.numViews += 1;
+    await property.save();
     res.send(property);
   },
   invoiceWebhook: async (req: Request, res: Response) => {

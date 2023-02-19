@@ -9,6 +9,7 @@ const PropertySchema = new Schema(
     typeOfSpace: { type: String, required: true },
     description: { type: String, required: true },
     size: { type: Number, required: true },
+    numViews: { type: Number, default: 0 },
     pictureUrl: { type: String, required: true },
   },
   { timestamps: true }
